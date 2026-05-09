@@ -1,21 +1,41 @@
-Log parser made for reconnexion.tf as per their wish for moving on from logs.tf or atleast avoid it as much as possible
+# tf2-log-parser
 
-python main.py [server_log]
+A TF2 server log parser built for **[reconnexion.tf](https://reconnexion.tf)**, designed to move away from logs.tf dependency and give full control over match statistics.
 
-TFTrue is needed for this parser to work
-Python3 is required (duh)
+## Requirements
 
-__________________________
-The program returns a JSON (in the terminal for now) that follows this template:
+- **Python 3**
+- **[TFTrue](https://github.com/andrewbo29/tftrue)** — required for the additional log events this parser relies on
 
-"SteamId" = {
-    "name" = "",
-    "kills" = 0,
-    "deaths" = 0,
-    "damage" = 0,
-    "classesPlayed" = "",
-    "team" = ""
-} 
+## Usage
 
-Every players are included, and in the offchance that the tournament mode gets glitchy or people have fun bugging it, it should not ruin their stats or give the parser any trouble.
-Spies have boosted stats due to the fact they do six time their damage for each backstab they get, thats double for the backstab + triple because it's a crit. TFTrue has a real_damage event but I don't know why it's put before the backstab is registered, so it's difficult to make a condition for it
+```bash
+python main.py <server_log>
+```
+
+## Output
+
+The parser outputs a JSON object to stdout, with each player keyed by their Steam ID:
+
+```json
+{
+  "U:1:962268762": {
+    "name": "Jean-Paul Sartre",
+    "kills": 0,
+    "deaths": 0,
+    "damage": 0,
+    "classesPlayed": [],
+    "team": ""
+  }
+}
+```
+
+Every player present in the log is included, regardless of when they joined or left.
+
+## Notes
+
+### Robustness
+The parser is built to handle edge cases gracefully — if tournament mode behaves unexpectedly or players find ways to bug it, their stats won't be corrupted and the parser won't crash.
+
+### Spy damage
+Spy damage is currently inflated compared to other classes. A backstab deals 6× the target's health (double from the backstab bonus, triple from the crit multiplier), which significantly skews damage numbers. TFTrue does emit a `real_damage` event, but it fires *before* the backstab is registered, making it unreliable to use as a correction condition. This is a known limitation for now.
