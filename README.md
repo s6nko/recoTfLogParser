@@ -1,4 +1,4 @@
-# tf2-log-parser
+# recoTfLogParser
 
 A TF2 server log parser built for **[reconnexion.tf](https://reconnexion.tf)**, designed to have full control over match statistics without relying on logs.tf in the offchance the website would go down.
 
