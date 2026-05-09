@@ -5,7 +5,7 @@ A TF2 server log parser built for **[reconnexion.tf](https://reconnexion.tf)**, 
 ## Requirements
 
 - **Python 3**
-- **[TFTrue](https://github.com/andrewbo29/tftrue)** — required for the additional log events this parser relies on
+- **[TFTrue]** [original](https://www.teamfortress.tv/7666/tftrue)/[sapphonie's](https://github.com/sapphonie/tf2rue) — required for the additional log events this parser relies on
 
 ## Usage
 
